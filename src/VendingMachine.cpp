@@ -1,8 +1,10 @@
 #include "VendingMachine.h"
 #include "Devices.h"
 #include "Items.h"
+#include <string>
 
-VendingMachine::VendingMachine() {
+VendingMachine::VendingMachine(const std::string & key): SecureDevice(key) {
+
 }
 
 int VendingMachine::Start() {

@@ -6,7 +6,7 @@
 #include "Slot.h"
 #include <vector>
 
-class VendingMachine: public AbstractMachine {
+class VendingMachine: public AbstractMachine, public SecureDevice {
 public:
   // Actions for user
   virtual Item* Dispense();
@@ -28,11 +28,9 @@ public:
   // virtual UpdateQuarters(int newcount);
 
   // virtual int GetStatus();
-  VendingMachine();
+  VendingMachine(const std::string & key);
 
 private:
-  bool isRunning;
-  bool isLocked;
 
   // Display module
   std::string status;

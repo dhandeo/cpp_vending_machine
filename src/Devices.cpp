@@ -16,7 +16,7 @@ int SecureDevice::UnLock(const std::string &key) {
   }
 }
 
-SecureDevice::SecureDevice(const std::string &newkey): key(newkey) {
+SecureDevice::SecureDevice(const std::string &newkey): key(newkey), locked(true) {
 
 }
 

@@ -23,7 +23,6 @@ class SecureDevice {
     bool locked;
 
   public:
-    SecureDevice();
     SecureDevice(const std::string & key);
     bool isLocked() { return this->locked; }
     int Lock();

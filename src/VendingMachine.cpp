@@ -2,10 +2,28 @@
 #include "Devices.h"
 #include "Items.h"
 #include <string>
+#include <typeinfo>
 
-VendingMachine::VendingMachine(const std::string & key): SecureDevice(key) {
+VendingMachine::VendingMachine(const std::string & key):
+  SecureDevice(key), bills(4), quarters(1) {
 
 }
+
+int VendingMachine::InsertQuarter(Quarter *money) {
+  this->quarters.Deposit((Quarter *) money);
+  return SUCCESS;
+}
+
+int VendingMachine::InsertBill(Dollar *money) {
+    this->bills.Deposit((Dollar*) money);
+    return SUCCESS;
+}
+
+void VendingMachine::PrintStatus() {
+  std::cout << "Dollars: " << this->bills << std::endl;
+  std::cout << "Quarters: " << this->quarters << std::endl;
+}
+
 
 int VendingMachine::Start() {
   // TODO: Consider failures

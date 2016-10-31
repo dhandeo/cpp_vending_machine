@@ -2,7 +2,7 @@
 #include "VendingMachine.h"
 #include <iostream>
 
-void testDevices() {
+void testSecureDevices() {
   SecureDevice d("secret");
   std::cout << "Default Locked: " << d.isLocked() << std::endl;
   std::cout << "Wrong unlock: " << d.UnLock("wrong") << std::endl;
@@ -10,16 +10,40 @@ void testDevices() {
   std::cout << "Lock Status: " << d.isLocked() << std::endl;
   d.Lock();
   std::cout << "After Locking: " << d.isLocked() << std::endl;
+
+  VendingMachine v("secret");
+  std::cout << "VM Default Locked: " << v.isLocked() << std::endl;
+  std::cout << "VM Wrong unlock: " << v.UnLock("wrong") << std::endl;
+  std::cout << "VM Correct Unlock: " << v.UnLock("secret") << std::endl;
+  std::cout << "VM Lock Status: " << v.isLocked() << std::endl;
+  v.Lock();
+  std::cout << "VM After Locking: " << v.isLocked() << std::endl;
+
 }
 
 void testVendingMachine() {
-  VendingMachine v("secret");
-  std::cout << "Default Locked: " << v.isLocked() << std::endl;
-  std::cout << "Wrong unlock: " << v.UnLock("wrong") << std::endl;
-  std::cout << "Correct Unlock: " << v.UnLock("secret") << std::endl;
-  std::cout << "Lock Status: " << v.isLocked() << std::endl;
-  v.Lock();
-  std::cout << "After Locking: " << v.isLocked() << std::endl;
+  VendingMachine a("c++11");
+
+  // Add some stuff
+  a.Start();
+  a.UnLock("c++11");
+  // a.Deposit();
+  // a.Status();
+
+  // User requests something
+  // a.SelectSlot(0);
+  Dollar *dollar = new Dollar;
+
+  a.InsertBill(dollar);
+  a.PrintStatus();
+
+  // Item *snack = a.Dispense();
+  // Currency *
+
+  // It is now responsibility of this function
+  // To deal with Items obtained
+  // Anticipated failures
+
 }
 
 
@@ -34,7 +58,7 @@ void testMachines() {
 }
 
 int main() {
-  testDevices();
+  testSecureDevices();
   testVendingMachine();
   testMachines();
 }

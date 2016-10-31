@@ -26,6 +26,11 @@ void testVendingMachine() {
 void testMachines() {
   // Create Vending Machine
   VendingMachine a("");
+  std::cout << "Default start: " << a.isStarted() << std::endl;
+  a.Start();
+  std::cout << "After starting: " << a.isStarted() << std::endl;
+  a.Stop();
+  std::cout << "After stopping: " << a.isStarted() << std::endl;
 }
 
 int main() {

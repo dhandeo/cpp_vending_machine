@@ -7,6 +7,8 @@
 #include <vector>
 #include <iomanip>
 
+#include "Exceptions.h"
+
 /// A Slot represents the module keeping track of objects that can be dispensed
 /// Provides a simple api to add, remove objects or to dispense a single object
 /// Maintains the count of available objects and price
@@ -63,6 +65,7 @@ template<class T> T* Slot<T>::Dispense() {
   }
   else {
     // TODO: Raise some error
+    throw(nothingToDispenseException());
   }
 
 }

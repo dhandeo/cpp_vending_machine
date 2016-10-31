@@ -18,8 +18,9 @@ void testSlot() {
   int *other = b.Dispense();
   std::cout << "Dispensed: " << *other << std::endl;
   std::cout << "After Dispense: " << b << std::endl;
-
   delete other;
+
+  other = b.Dispense();
 }
 
 int main() {

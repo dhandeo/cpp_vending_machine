@@ -17,23 +17,22 @@ template <class T> class Slot {
     std::vector<T *> store;
     std::string name; // Item name stored in this slot
     unsigned int quarters; // item price in quarters
-    unsigned int available; // Number available
 
   public:
     // Constructors
     Slot();
-    Slot(int priceInQuarters, unsigned int howMany);
+    Slot(int priceInQuarters);
 
     // Accessors
     // Getters
     std::string getName() const {return this->name;};
-    unsigned int getAvailable() const {return this->available;};
     unsigned int getPriceInQuarters() const {return this->quarters;};
     double getPrice() const {return this->quarters * 0.25;};
+    unsigned int getAvailable() const {return this->store.size();};
 
     // Setters
-    void Deposit(std::vector<T*>);
-    std::vector<T*> Remove(unsigned int howMany);
+    void Deposit(T*);
+    T* Remove(unsigned int howMany);
 
     unsigned int setPriceInQuarters(int quarters) {this->quarters = quarters;};
 
@@ -44,13 +43,30 @@ template <class T> class Slot {
     template<class U> friend std::ostream& operator<<(std::ostream& os, const Slot<U>& it);
 };
 
-template<class T> Slot<T>::Slot(): quarters(0), available(0), name(typeid(T).name()) {
+template<class T> Slot<T>::Slot(): quarters(0), name(typeid(T).name()) {
 
 }
 
-template<class T> Slot<T>::Slot(int priceInQuarters, unsigned int howMany):
-    quarters(priceInQuarters), available(howMany), name(typeid(T).name()) {
+template<class T> Slot<T>::Slot(int priceInQuarters):
+    quarters(priceInQuarters), name(typeid(T).name()) {
 }
+
+template<class T> void Slot<T>::Deposit(T *some) {
+  this->store.push_back(some);
+}
+
+template<class T> T* Slot<T>::Dispense() {
+  if(this->store.size() > 0) {
+      T *item = this->store.back();
+      this->store.pop_back();
+      return item;
+  }
+  else {
+    // TODO: Raise some error
+  }
+
+}
+
 
 template<class U> std::ostream& operator<<(std::ostream& os, const Slot<U>& it) {
     os << it.getAvailable() << " of " << it.getName() << " @ $" << std::fixed << std::setprecision(2) << it.getPrice();

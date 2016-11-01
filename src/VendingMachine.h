@@ -9,10 +9,12 @@
 class VendingMachine: public AbstractMachine, public SecureDevice {
 public:
   // Actions for user
-  Item* Dispense();
+  Item* Dispense(unsigned int slot);
   std::vector<Currency *> DispenseMoney(int quarters);
-  // virtual std::string ReadDisplay();
-  // virtual void SelectSlot(int index);
+  // Wrapper around DispenseMoney which
+  // also cancels the transaction
+  std::vector<Currency *> Cancel();
+  const std::string & ReadDisplay() { return this->status;} ;
   int InsertQuarter(Quarter *money);
   int InsertBill(Dollar *money);
 
@@ -34,7 +36,7 @@ private:
 
   // TODO: This can go into its own Display module
   std::string status;
-
+  unsigned int transactionQuarters;
   // // Selection module
   // InputModule selectpad;
   //

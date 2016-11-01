@@ -26,13 +26,15 @@ void testVendingMachine() {
 
   // Add some stuff
   a.Start();
-  a.UnLock("c++11");
+  if(a.UnLock("c++11") != SUCCESS) {
+    std::cout << "Error: Operator unable to unlock the machine" << std::endl;
+  }
+
   Cake *cake = new Cake;
   a.Deposit(0, cake, 4);
   a.PrintStatus();
 
   // User requests something
-  // a.SelectSlot(0);
   Dollar *dollar = new Dollar;
   a.InsertBill(dollar);
   a.PrintStatus();

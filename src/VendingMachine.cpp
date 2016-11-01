@@ -5,7 +5,7 @@
 #include <typeinfo>
 
 VendingMachine::VendingMachine(const std::string & key, unsigned int numSlots):
-  SecureDevice(key), bills(4), quarters(1) {
+  SecureDevice(key), bills(4), quarters(1), transactionQuarters(0) {
     // Initialize the slots
     for(int i=0; i < numSlots; i++) {
       Slot<Item> aslot;
@@ -35,10 +35,10 @@ int VendingMachine::Deposit(int slot, Item * item, unsigned int priceInQuarters)
 }
 
 
-
 int VendingMachine::InsertQuarter(Quarter *money) {
   if(this->isStarted()) {
     this->quarters.Deposit((Quarter *) money);
+    this->transactionQuarters += 1;
     return SUCCESS;
   }
   else {
@@ -49,6 +49,7 @@ int VendingMachine::InsertQuarter(Quarter *money) {
 int VendingMachine::InsertBill(Dollar *money) {
   if(this->isStarted()) {
     this->bills.Deposit((Dollar*) money);
+    this->transactionQuarters += 4;
     return SUCCESS;
   }
   else {
@@ -90,24 +91,45 @@ std::vector<Currency *> VendingMachine::DispenseMoney(int quarters) {
   return result;
 }
 
-Item * VendingMachine::Dispense() {
+std::vector<Currency *>  VendingMachine::Cancel() {
+  //TODO: Return any deposited money and reset
+  if(this->transactionQuarters > 0) {
+    // Reset
+    this->transactionQuarters = 0;
+    return this->DispenseMoney(this->transactionQuarters);
+  }
+  std::vector<Currency *> result;
+  return result; 
+}
+
+Item * VendingMachine::Dispense(unsigned int slot) {
   // Dispenses an item from selected slot, and remaining change
+  // Dispenss NULL and changes status message
   // Expects the machine to be is ready, raises
-  // an exception if called while not ready
+  if(!this->isStarted()) {
+    this->status = "Machine not ready";
+    return NULL;
+  }
 
   // Selected slot should be ready
+  if(this->slots[slot].getAvailable() < 1) {
+    this->status = "Nothing in that slot";
+    return NULL;
+  }
 
-  // Verify that enough currency is loaded
+  // Compute cost
+  int quarters = this->slots[slot].getPriceInQuarters();
+  if(this->transactionQuarters < quarters) {
+    this->status = "Need more money";
+    return NULL;
+  }
 
-  // Check that enough change is available
+  // TODO: Check that enough change is available
 
   // Dispense the change
-  int change=2;
-  this->DispenseMoney(2);
+  this->DispenseMoney(this->transactionQuarters - quarters);
+  // TODO: Log the transaction success
 
   // Dispense the item
-
-  Item *item = new Cake();
-  // Log the transaction success
-  return(item);
+  return(this->slots[slot].Dispense());
 }

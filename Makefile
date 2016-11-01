@@ -3,6 +3,7 @@ default: all
 all: slottest machinestest
 
 testSlot.o: Slot.o
+
 testMachines.o: Devices.o VendingMachine.o Items.o
 
 VendingMachine.o: src/VendingMachine.cpp src/VendingMachine.h Devices.o Items.o
@@ -20,4 +21,4 @@ machinestest: testMachines.o
 		g++ -I src/ tests/testMachines.cpp src/VendingMachine.cpp src/Devices.cpp src/Items.cpp -o machinestest
 
 clean:
-	rm -f slottest
+	rm -f slottest machinestest

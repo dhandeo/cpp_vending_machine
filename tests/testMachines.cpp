@@ -39,7 +39,9 @@ void testVendingMachine() {
   a.InsertBill(dollar);
   a.PrintStatus();
 
-  // Item *snack = a.Dispense();
+  Item *snack = a.Dispense(0);
+  a.PrintStatus();
+  std::cout << "Snack: " << snack->Name() << std::endl;
   // Currency *
 
   // It is now responsibility of this function

@@ -22,18 +22,18 @@ void testSecureDevices() {
 }
 
 void testVendingMachine() {
-  VendingMachine a("c++11");
+  VendingMachine a("c++11", 2);
 
   // Add some stuff
   a.Start();
   a.UnLock("c++11");
-  // a.Deposit();
-  // a.Status();
+  Cake *cake = new Cake;
+  a.Deposit(0, cake, 4);
+  a.PrintStatus();
 
   // User requests something
   // a.SelectSlot(0);
   Dollar *dollar = new Dollar;
-
   a.InsertBill(dollar);
   a.PrintStatus();
 
@@ -43,7 +43,6 @@ void testVendingMachine() {
   // It is now responsibility of this function
   // To deal with Items obtained
   // Anticipated failures
-
 }
 
 
@@ -58,7 +57,7 @@ void testMachines() {
 }
 
 int main() {
-  testSecureDevices();
+  // testSecureDevices();
   testVendingMachine();
-  testMachines();
+  // testMachines();
 }

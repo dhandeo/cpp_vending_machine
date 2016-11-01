@@ -5,18 +5,24 @@
 #include <iostream>
 
 class Item {
+  public:
+    virtual std::string Name() {return "Item";};
 };
 
+// Products have a price
 class Product : public Item {
-
+  public:
+    virtual std::string Name() {return "Product";};
 };
 
 class Cake : public Product {
-
+  public:
+    virtual std::string Name() {return "Cake";};
 };
 
 class Cookie : public Product {
-
+  public:
+    virtual std::string Name() {return "Cookie";};
 };
 
 // Base class for two money items

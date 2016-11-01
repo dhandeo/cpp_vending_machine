@@ -37,6 +37,7 @@ template <class T> class Slot {
     T* Remove(unsigned int howMany);
 
     unsigned int setPriceInQuarters(int quarters) {this->quarters = quarters;};
+    unsigned int setName(std::string name) {this->name = name;};
 
     // Single object Dispense
     T* Dispense();

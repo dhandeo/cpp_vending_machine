@@ -9,7 +9,8 @@
 class VendingMachine: public AbstractMachine, public SecureDevice {
 public:
   // Actions for user
-  virtual Item* Dispense();
+  Item* Dispense();
+  std::vector<Currency *> DispenseMoney(int quarters);
   // virtual std::string ReadDisplay();
   // virtual void SelectSlot(int index);
   int InsertQuarter(Quarter *money);
@@ -20,12 +21,14 @@ public:
   virtual int Stop();
 
   // TODO: Add methods for operator to add / remove items once the machine is unlocked
-  // virtual void UpdateSlot(int slot, Item item, int newcount);
+  int Deposit(int slot, Item * item, unsigned int priceInQuarters);
+  // int Deposit(int slot, Item * item);
   // virtual UpdateDollarBills(int newcount);
   // virtual UpdateQuarters(int newcount);
 
   void PrintStatus();
-  VendingMachine(const std::string & key);
+  VendingMachine(const std::string & key, unsigned int numSlots=0);
+
 
 private:
 
@@ -38,7 +41,7 @@ private:
   // // Currency module
   // MoneyModule moneybin;
 
-  std::vector<Slot<Item *> > slots;
+  std::vector<Slot<Item> > slots;
 
   // TODO: This could go into its own MoneyModule
   Slot<Dollar> bills;
